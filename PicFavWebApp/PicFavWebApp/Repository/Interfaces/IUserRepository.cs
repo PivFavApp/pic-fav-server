@@ -9,7 +9,10 @@ namespace PicFavWebApp.Repository.Interfaces
     public interface IUserRepository
     {
         void CreateUser(User user);
-        User GerUserByPublicId(Guid id);
+        User GetUserByPublicId(string id);
         ICollection<User> GetAllUsers();
+        string GetUserPublicIdByUsername(string userName);
+        string GetSalt(string userName);
+        User GetUser(string username, string password);
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using PicFavWebApp.Models;
 using PicFavWebApp.Repository.Interfaces;
 using PicFavWebApp.Services.Interfaces;
+using NotImplementedException = System.NotImplementedException;
 
 namespace PicFavWebApp.Services.Implementations
 {
@@ -32,11 +33,11 @@ namespace PicFavWebApp.Services.Implementations
             }
         }
 
-        public User GerUserByPublicId(Guid id)
+        public User GetUserByPublicId(string id)
         {
             try
             {
-                return _userRepository.GerUserByPublicId(id);
+                return _userRepository.GetUserByPublicId(id);
             }
             catch (Exception e)
             {
@@ -50,6 +51,45 @@ namespace PicFavWebApp.Services.Implementations
             try
             {
                 return _userRepository.GetAllUsers();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        public string GetUserPublicIdByUsername(string userName)
+        {
+            try
+            {
+                return _userRepository.GetUserPublicIdByUsername(userName);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        public string GetSalt(string userName)
+        {
+            try
+            {
+                return _userRepository.GetSalt(userName);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        public User GetUser(string username, string password)
+        {
+            try
+            {
+                return _userRepository.GetUser(username, password);
             }
             catch (Exception e)
             {

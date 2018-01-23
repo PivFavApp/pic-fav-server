@@ -12,13 +12,13 @@ using PicFavWebApp.Services.Interfaces;
 
 namespace PicFavWebApp.Controllers
 {
-    public class UsersController : Controller
+    public class UserController : Controller
     {
         private PicFavContext db = new PicFavContext();
 
         private readonly IUserService _userService;
 
-        public UsersController(IUserService userService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }

@@ -15,7 +15,7 @@ namespace PicFavWebApp.Repository.Implementations
             context.SaveChanges();
         }
 
-        public User GerUserByPublicId(Guid id)
+        public User GetUserByPublicId(string id)
         {
             return context.Users.SingleOrDefault(u => u.PublicId == id);
         }
@@ -23,6 +23,23 @@ namespace PicFavWebApp.Repository.Implementations
         public ICollection<User> GetAllUsers()
         {
             return context.Users.ToList();
+        }
+
+        public string GetUserPublicIdByUsername(string userName)
+        {
+            var user = context.Users.FirstOrDefault(u => u.UserName == userName);
+            return user?.PublicId;
+        }
+
+        public string GetSalt(string userName)
+        {
+            var user = context.Users.FirstOrDefault(u => u.UserName == userName);
+            return user?.Salt;
+        }
+
+        public User GetUser(string username, string password)
+        {
+            return context.Users.FirstOrDefault(u => u.UserName == username && u.Password == password);
         }
     }
 }
