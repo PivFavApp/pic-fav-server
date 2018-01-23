@@ -7,7 +7,8 @@ namespace PicFavWebApp.Models
 {
     public class User
     {
-        public int UserID { get; set; }
+        public int UserId { get; set; }
+        public Guid PublicId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string UserName { get; set; }
@@ -16,5 +17,10 @@ namespace PicFavWebApp.Models
         public int Rating { get; set; }
         public string AvatarUrl { get; set; }
         public UserRole Role { get; set; }
+
+        public User()
+        {
+            PublicId = Guid.NewGuid();
+        }
     }
 }

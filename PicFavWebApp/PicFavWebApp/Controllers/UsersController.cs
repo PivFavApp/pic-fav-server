@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PicFavWebApp.DAL;
 using PicFavWebApp.Models;
+using PicFavWebApp.Services.Interfaces;
 
 namespace PicFavWebApp.Controllers
 {
@@ -15,10 +16,16 @@ namespace PicFavWebApp.Controllers
     {
         private PicFavContext db = new PicFavContext();
 
+        private readonly IUserService _userService;
+
+        public UsersController(IUserService userService)
+        {
+            _userService = userService;
+        }
         // GET: Users
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            return View(_userService.GetAllUsers().ToList());
         }
 
         // GET: Users/Details/5
@@ -47,7 +54,7 @@ namespace PicFavWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,FirstName,LastName,UserName,Password,Rating,AvatarUrl,Role")] User user)
+        public ActionResult Create([Bind(Include = "UserId,FirstName,LastName,UserName,Password,Rating,AvatarUrl,Role")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +86,7 @@ namespace PicFavWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,FirstName,LastName,UserName,Password,Rating,AvatarUrl,Role")] User user)
+        public ActionResult Edit([Bind(Include = "UserId,FirstName,LastName,UserName,Password,Rating,AvatarUrl,Role")] User user)
         {
             if (ModelState.IsValid)
             {
