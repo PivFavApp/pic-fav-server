@@ -5,8 +5,11 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Http;
+using Castle.Core.Internal;
 using PicFavWebApp.Models;
+using PicFavWebApp.Models.DTO;
 using PicFavWebApp.Services.Interfaces;
+using PicFavWebApp.Utils;
 
 namespace PicFavWebApp.Controllers.Api
 {
@@ -45,7 +48,7 @@ namespace PicFavWebApp.Controllers.Api
             }
             else
             {
-                return BadRequest("User already exists.");
+                return BadRequest("User already exists");
             }
             
         }
@@ -54,8 +57,9 @@ namespace PicFavWebApp.Controllers.Api
         public IHttpActionResult GetAllUsers()
         {
             var users = _userService.GetAllUsers();
-            if (users != null)
+            if (users.IsNullOrEmpty())
             {
+                //return Ok(ObjectConverter.ModelsToDtos<UserDTO,User>(users));
                 return Ok(users);
             }
             else
@@ -66,7 +70,7 @@ namespace PicFavWebApp.Controllers.Api
 
         public IHttpActionResult GetUserById(string publicId)
         {
-            return Ok(_userService.GetUserByPublicId(publicId));
+            return Ok(ObjectConverter.ModelToDto<UserDTO,User>(_userService.GetUserByPublicId(publicId)));
         }
     }
 }

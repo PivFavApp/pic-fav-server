@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using PicFavWebApp.Models;
 using PicFavWebApp.Repository.Interfaces;
@@ -96,6 +98,24 @@ namespace PicFavWebApp.Services.Implementations
                 Console.WriteLine(e);
                 return null;
             }
+        }
+
+        public User GetUserWithRawPassword(string username, string password)
+        {
+            string salt = GetSalt(username);
+
+            using (var sha512 = SHA512.Create())
+            {
+                var hashed = sha512.ComputeHash(Encoding.UTF8.GetBytes(password + salt));
+
+                password = BitConverter.ToString(hashed);
+            }
+            User user = GetUser(username, password);
+            return user;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

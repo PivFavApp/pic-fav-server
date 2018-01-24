@@ -6,7 +6,7 @@ using PicFavWebApp.Models;
 
 namespace PicFavWebApp.Services.Interfaces
 {
-    public interface IUserService
+    public interface IUserService : IDisposable
     {
         bool CreateUser(User user);
         User GetUserByPublicId(string id);
@@ -14,5 +14,6 @@ namespace PicFavWebApp.Services.Interfaces
         string GetUserPublicIdByUsername(string userName);
         string GetSalt(string userName);
         User GetUser(string username, string password);
+        User GetUserWithRawPassword(string username, string password);
     }
 }
