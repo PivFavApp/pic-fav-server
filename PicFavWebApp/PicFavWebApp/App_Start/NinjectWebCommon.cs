@@ -4,6 +4,7 @@ using System.Web.Http;
 using System.Web.Http.Dependencies;
 using Ninject.Extensions.Conventions;
 using Ninject.Web.Common.WebHost;
+using NLog;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(PicFavWebApp.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(PicFavWebApp.NinjectWebCommon), "Stop")]
@@ -21,6 +22,7 @@ namespace PicFavWebApp
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Starts the application
@@ -46,6 +48,7 @@ namespace PicFavWebApp
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
+            logger.Debug("Configuring Ninject bindings");
             var kernel = new StandardKernel();
             try
             {

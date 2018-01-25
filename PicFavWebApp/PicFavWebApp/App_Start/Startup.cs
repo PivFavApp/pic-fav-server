@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
+using NLog;
 using Owin;
 using PicFavWebApp.App_Start;
 using PicFavWebApp.Provider;
@@ -15,13 +16,14 @@ namespace PicFavWebApp
 {
     public class Startup
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public void Configuration(IAppBuilder app)
         {
+            logger.Debug("Configuring OAuth");
             HttpConfiguration config = new HttpConfiguration();
 
             ConfigureOAuth(app);
-
-            //WebApiConfig.Register(config);
+            
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
         }

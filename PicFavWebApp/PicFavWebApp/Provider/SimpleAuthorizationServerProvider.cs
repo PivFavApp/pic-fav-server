@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc.Async;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security.OAuth;
+using NLog;
 using PicFavWebApp.Models;
 using PicFavWebApp.Services.Implementations;
 using PicFavWebApp.Services.Interfaces;
@@ -15,6 +16,7 @@ namespace PicFavWebApp.Provider
 {
     public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             context.Validated();
@@ -22,6 +24,7 @@ namespace PicFavWebApp.Provider
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
+            logger.Debug("Processing user token authorization");
             context.Validated(new ClaimsIdentity(context.Options.AuthenticationType));
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });

@@ -56,11 +56,10 @@ namespace PicFavWebApp.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetAllUsers()
         {
-            var users = _userService.GetAllUsers();
-            if (users.IsNullOrEmpty())
+            var users = _userService.GetAllUsers().ToList();
+            if (!users.IsNullOrEmpty())
             {
-                //return Ok(ObjectConverter.ModelsToDtos<UserDTO,User>(users));
-                return Ok(users);
+                return Ok(ObjectConverter.ModelsToDtos<UserDTO,User>(users));
             }
             else
             {
