@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -12,9 +13,15 @@ namespace PicFavWebApp.Models
 
         // Public ID for external usage
         public string PublicId { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [Required]
+        [MinLength(8, ErrorMessage = "Username must contain at leasts 8 characters")]
         public string UserName { get; set; }
+        [Required]
+        [MinLength(8, ErrorMessage = "Password must contain at leasts 8 characters")]
         public string Password { get; set; }
         public uint Age { get; set; }
         public int Rating { get; set; }

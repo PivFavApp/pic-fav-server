@@ -37,20 +37,12 @@ namespace PicFavWebApp.Controllers.Api
 
             if (_userService.GetUserPublicIdByUsername(user.UserName) == null)
             {
-                if (_userService.CreateUser(user))
-                {
-                    return Ok("User created successfuly");
-                }
-                else
-                {
-                    return InternalServerError();
-                }
+                return Ok("User created successfuly");   
             }
             else
             {
                 return BadRequest("User already exists");
             }
-            
         }
 
         [HttpGet]

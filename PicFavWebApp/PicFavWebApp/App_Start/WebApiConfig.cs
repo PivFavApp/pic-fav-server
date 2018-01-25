@@ -12,6 +12,7 @@ namespace PicFavWebApp.App_Start
         public static void Register(HttpConfiguration config)
         {
             config.Filters.Add(new UnhandledExceptionAttribute());
+            config.Filters.Add(new ValidateModelAttribute());
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
