@@ -69,7 +69,6 @@ namespace PicFavWebApp.Controllers.Api
 
         public IHttpActionResult GetUserById(string publicId)
         {
-            publicId.ToLower();
             UserDTO user = ObjectConverter.ModelToDto<UserDTO, User>(_userService.GetUserByPublicId(publicId));
             if (user != null)
             {
