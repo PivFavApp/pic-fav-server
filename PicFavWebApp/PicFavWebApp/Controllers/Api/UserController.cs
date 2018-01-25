@@ -69,7 +69,14 @@ namespace PicFavWebApp.Controllers.Api
 
         public IHttpActionResult GetUserById(string publicId)
         {
-            return Ok(ObjectConverter.ModelToDto<UserDTO,User>(_userService.GetUserByPublicId(publicId)));
+            publicId.ToLower();
+            UserDTO user = ObjectConverter.ModelToDto<UserDTO, User>(_userService.GetUserByPublicId(publicId));
+            if (user != null)
+            {
+                return Ok(user);
+            }
+
+            return NotFound();    
         }
     }
 }
