@@ -23,7 +23,7 @@ namespace PicFavWebApp.Models
         [Required]
         [MinLength(8, ErrorMessage = "Password must contain at leasts 8 characters")]
         public string Password { get; set; }
-        public uint Age { get; set; }
+        public long Age { get; set; }
         public int Rating { get; set; }
         public string AvatarUrl { get; set; }
         public UserRole Role { get; set; }

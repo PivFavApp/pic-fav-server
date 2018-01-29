@@ -18,6 +18,9 @@ namespace PicFavWebApp.DAL
 
             users.ForEach(s => context.Users.Add(s));
             context.SaveChanges();
+
+            context.Games.Add(new Game {Date = DateTime.Now.Ticks, Name = "testGame1"});
+            context.SaveChanges();
         }
     }
 }

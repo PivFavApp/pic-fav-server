@@ -15,6 +15,8 @@ namespace PicFavWebApp.DAL
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Game> Games { get; set; }
+        public DbSet<GameImage> GameImages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

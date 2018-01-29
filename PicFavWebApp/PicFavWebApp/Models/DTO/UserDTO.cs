@@ -11,7 +11,7 @@ namespace PicFavWebApp.Models.DTO
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string UserName { get; set; }
-        public uint Age { get; set; }
+        public long Age { get; set; }
         public int Rating { get; set; }
         public string AvatarUrl { get; set; }
         public UserRole Role { get; set; }

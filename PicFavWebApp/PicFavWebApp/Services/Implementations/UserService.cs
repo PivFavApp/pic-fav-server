@@ -14,10 +14,12 @@ namespace PicFavWebApp.Services.Implementations
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IGameRepository _gameRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IGameRepository gameRepository)
         {
             _userRepository = userRepository;
+            _gameRepository = gameRepository;
         }
 
         public bool CreateUser(User user)
@@ -52,6 +54,21 @@ namespace PicFavWebApp.Services.Implementations
         {
             try
             {
+                _gameRepository.CreateGame(new Game
+                {
+                    Date = DateTime.Now.Ticks,
+                    Name = "testName3",
+                    Images = new List<GameImage>
+                    {
+                        new GameImage
+                        {
+                            ImageUrl = "testurl",
+                            IsValid = true
+                        }
+                    }
+
+                });
+                List<Game> games = _gameRepository.GetAllGames();
                 return _userRepository.GetAllUsers();
             }
             catch (Exception e)
