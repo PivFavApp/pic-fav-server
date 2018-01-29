@@ -35,9 +35,8 @@ namespace PicFavWebApp.Controllers.Api
                 user.Password = BitConverter.ToString(hashed);
             }
 
-            if (_userService.GetUserPublicIdByUsername(user.UserName) == null)
+            if (_userService.GetUserPublicIdByUsername(user.UserName) == null && _userService.CreateUser(user))
             {
-                _userService.CreateUser(user);
                 return Ok("User created successfuly");   
             }
             else

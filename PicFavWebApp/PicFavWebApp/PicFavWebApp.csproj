@@ -221,6 +221,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Api\GameController.cs" />
+    <Compile Include="Controllers\Api\ImageController.cs" />
     <Compile Include="Controllers\Api\TokenTestController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -240,6 +242,22 @@
     <Compile Include="Migrations\201801291324040_AddedModels.Designer.cs">
       <DependentUpon>201801291324040_AddedModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801291443001_AddedIndexes.cs" />
+    <Compile Include="Migrations\201801291443001_AddedIndexes.Designer.cs">
+      <DependentUpon>201801291443001_AddedIndexes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801291530550_UpdatedImagesModel.cs" />
+    <Compile Include="Migrations\201801291530550_UpdatedImagesModel.Designer.cs">
+      <DependentUpon>201801291530550_UpdatedImagesModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801291718399_AddedImageRelationship.cs" />
+    <Compile Include="Migrations\201801291718399_AddedImageRelationship.Designer.cs">
+      <DependentUpon>201801291718399_AddedImageRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801291835528_UpdatedGameImage.cs" />
+    <Compile Include="Migrations\201801291835528_UpdatedGameImage.Designer.cs">
+      <DependentUpon>201801291835528_UpdatedGameImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DTO\UserDTO.cs" />
     <Compile Include="Models\Game.cs" />
@@ -254,8 +272,11 @@
     <Compile Include="Repository\Implementations\UserRepository.cs" />
     <Compile Include="Repository\Interfaces\IGameRepository.cs" />
     <Compile Include="Repository\Interfaces\IUserRepository.cs" />
+    <Compile Include="Services\Implementations\GameService.cs" />
     <Compile Include="Services\Implementations\UserService.cs" />
+    <Compile Include="Services\Interfaces\IGameService.cs" />
     <Compile Include="Services\Interfaces\IUserService.cs" />
+    <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\ObjectConverter.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -312,6 +333,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\GameImages\TestGame\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -332,6 +354,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801291324040_AddedModels.resx">
       <DependentUpon>201801291324040_AddedModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801291443001_AddedIndexes.resx">
+      <DependentUpon>201801291443001_AddedIndexes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801291530550_UpdatedImagesModel.resx">
+      <DependentUpon>201801291530550_UpdatedImagesModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801291718399_AddedImageRelationship.resx">
+      <DependentUpon>201801291718399_AddedImageRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801291835528_UpdatedGameImage.resx">
+      <DependentUpon>201801291835528_UpdatedGameImage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

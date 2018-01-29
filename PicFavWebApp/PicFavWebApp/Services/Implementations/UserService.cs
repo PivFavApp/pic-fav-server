@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using NLog;
 using PicFavWebApp.Models;
 using PicFavWebApp.Repository.Interfaces;
 using PicFavWebApp.Services.Interfaces;
@@ -14,12 +15,12 @@ namespace PicFavWebApp.Services.Implementations
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IGameRepository _gameRepository;
 
-        public UserService(IUserRepository userRepository, IGameRepository gameRepository)
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _gameRepository = gameRepository;
         }
 
         public bool CreateUser(User user)
@@ -31,8 +32,7 @@ namespace PicFavWebApp.Services.Implementations
             }
             catch (Exception e)
             {
-                // need logger
-                Console.WriteLine(e);
+                logger.Error(e);
                 return false;
             }
         }
@@ -45,7 +45,7 @@ namespace PicFavWebApp.Services.Implementations
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                logger.Error(e);
                 return null;
             }
         }
@@ -58,7 +58,7 @@ namespace PicFavWebApp.Services.Implementations
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                logger.Error(e);
                 return null;
             }
         }
@@ -71,7 +71,7 @@ namespace PicFavWebApp.Services.Implementations
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                logger.Error(e);
                 return null;
             }
         }
@@ -84,7 +84,7 @@ namespace PicFavWebApp.Services.Implementations
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                logger.Error(e);
                 return null;
             }
         }
@@ -97,23 +97,33 @@ namespace PicFavWebApp.Services.Implementations
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                logger.Error(e);
                 return null;
             }
         }
 
         public User GetUserWithRawPassword(string username, string password)
         {
-            string salt = GetSalt(username);
-
-            using (var sha512 = SHA512.Create())
+            try
             {
-                var hashed = sha512.ComputeHash(Encoding.UTF8.GetBytes(password + salt));
+                string salt = GetSalt(username);
 
-                password = BitConverter.ToString(hashed);
+                using (var sha512 = SHA512.Create())
+                {
+                    var hashed = sha512.ComputeHash(Encoding.UTF8.GetBytes(password + salt));
+
+                    password = BitConverter.ToString(hashed);
+                }
+
+                User user = GetUser(username, password);
+                return user;
             }
-            User user = GetUser(username, password);
-            return user;
+            catch (Exception e)
+            {
+                logger.Error(e);
+                return null;
+            }
+            
         }
 
         public void Dispose()

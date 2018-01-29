@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -12,6 +13,8 @@ namespace PicFavWebApp.Models
         public int UserId { get; set; }
 
         // Public ID for external usage
+        [Index("IX_UserPublicId",IsUnique = true)]
+        [StringLength(450)]
         public string PublicId { get; set; }
         [Required]
         public string FirstName { get; set; }
@@ -19,6 +22,8 @@ namespace PicFavWebApp.Models
         public string LastName { get; set; }
         [Required]
         [MinLength(8, ErrorMessage = "Username must contain at leasts 8 characters")]
+        [Index("IX_UserName", IsUnique = true)]
+        [StringLength(450)]
         public string UserName { get; set; }
         [Required]
         [MinLength(8, ErrorMessage = "Password must contain at leasts 8 characters")]

@@ -1,5 +1,15 @@
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
+using System.Net;
+using System.Reflection;
+using System.Web;
+using System.Web.Helpers;
+using System.Web.Hosting;
+using System.Web.Mvc;
 using PicFavWebApp.Models;
+using PicFavWebApp.Utils;
+using UrlHelper = System.Web.Http.Routing.UrlHelper;
 
 namespace PicFavWebApp.Migrations
 {
@@ -22,17 +32,74 @@ namespace PicFavWebApp.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-            var users = new List<User>
+            try
             {
-                new User{UserId = 1, PublicId = Guid.NewGuid().ToString(), FirstName = "Bohdan333", LastName = "Skarg", Age = (long)22, UserName = "bole.skarg", Password = "bole.skargggg", Role = UserRole.AppUser},
-                new User{UserId = 2, PublicId = Guid.NewGuid().ToString(), FirstName = "admin333", LastName = "admin", Age = (long) 100, UserName = "PicFavAdmin", Password = "adminadmin", Role = UserRole.Admin}
-            };
+                
+                var users = new List<User>
+                {
+                    new User{UserId = 1, PublicId = Guid.NewGuid().ToString(), FirstName = "Bohdan333", LastName = "Skarg", Age = (long)22, UserName = "bole.skarg", Password = "bole.skargggg", Role = UserRole.AppUser},
+                    new User{UserId = 2, PublicId = Guid.NewGuid().ToString(), FirstName = "admin333", LastName = "admin", Age = (long) 100, UserName = "PicFavAdmin", Password = "adminadmin", Role = UserRole.Admin}
+                };
+                context.Users.RemoveRange(context.Users.Where(u => u.UserName == "bole.skarg" || u.UserName == "PicFavAdmin"));
+                context.SaveChanges();
+                users.ForEach(s => context.Users.AddOrUpdate(s));
+                context.SaveChanges();
 
-            users.ForEach(s => context.Users.AddOrUpdate(s));
-            context.SaveChanges();
+                string gamePublicId = Guid.NewGuid().ToString();
+                var gameImages = InitializeTestGameImages(gamePublicId);
+                var games = new List<Game>
+                {
+                    new Game
+                    {
+                        GameId = 1,
+                        Date = DateTime.Now.Ticks,
+                        PublicId = gamePublicId,
+                        Name = "testGame1",
+                        Images = gameImages
+                    }
+                };
+                context.Games.RemoveRange(context.Games.Where(g => g.Name == "testGame1"));
+                context.SaveChanges();
+                context.Games.AddOrUpdate(games.First());
+                context.SaveChanges();
+            }
+            catch (SqlException e)
+            {
+                if (!e.Message.Contains("duplicate key"))
+                {
+                    throw;
+                }
+            }
+        }
 
-            context.Games.AddOrUpdate(new Game { GameId = 1,Date = DateTime.Now.Ticks, Name = "testGame1", Images = new List<GameImage> { new GameImage { GameImageId = 1,IsValid = true, ImageUrl = "testurl" } } });
-            context.SaveChanges();
+        private List<GameImage> InitializeTestGameImages(string gameId)
+        {
+            List<GameImage> gameImages = new List<GameImage>();
+            //string imagesPath = /*HostingEnvironment.ApplicationPhysicalPath*/AppDomain.CurrentDomain.BaseDirectory + Constants.PATH_TO_GAME_IMAGES + @"TestGame/";
+            string imagesPath = MapPath("~/Content/GameImages/TestGame");
+            bool isImageValid = false;
+            string imageName = String.Empty;
+
+            foreach (var image in Directory.GetFiles(imagesPath))
+            {
+                imageName = Path.GetFileName(image).Split('.').First();
+                gameImages.Add(new GameImage { IsValid = isImageValid, ImageUrl = "https://picfavwebapp.azurewebsites.net/" + "api/image?gameId=" + gameId + "&imageName=" + imageName , ImageBlob = File.ReadAllBytes(image), ImageName = imageName});
+                isImageValid = !isImageValid;
+            }
+
+            return gameImages;
+        }
+
+        private string MapPath(string seedFile)
+        {
+            if (HttpContext.Current != null)
+                return HostingEnvironment.MapPath(seedFile);
+
+            var absolutePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath; //was AbsolutePath but didn't work with spaces according to comments
+            var directoryName = Path.GetDirectoryName(absolutePath);
+            var path = Path.Combine(directoryName, ".." + seedFile.TrimStart('~').Replace('/', '\\'));
+
+            return path;
         }
     }
 }
