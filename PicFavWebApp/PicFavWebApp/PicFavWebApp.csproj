@@ -232,9 +232,19 @@
     </Compile>
     <Compile Include="Helpers\UnhandledExceptionAttribute.cs" />
     <Compile Include="Helpers\ValidateModelAttribute.cs" />
+    <Compile Include="Migrations\201801291238246_InitialCreate.cs" />
+    <Compile Include="Migrations\201801291238246_InitialCreate.Designer.cs">
+      <DependentUpon>201801291238246_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801291324040_AddedModels.cs" />
+    <Compile Include="Migrations\201801291324040_AddedModels.Designer.cs">
+      <DependentUpon>201801291324040_AddedModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DTO\UserDTO.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\GameImage.cs" />
+    <Compile Include="Models\Statistics.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -315,6 +325,14 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201801291238246_InitialCreate.resx">
+      <DependentUpon>201801291238246_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801291324040_AddedModels.resx">
+      <DependentUpon>201801291324040_AddedModels.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

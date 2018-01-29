@@ -37,6 +37,7 @@ namespace PicFavWebApp.Controllers.Api
 
             if (_userService.GetUserPublicIdByUsername(user.UserName) == null)
             {
+                _userService.CreateUser(user);
                 return Ok("User created successfuly");   
             }
             else
@@ -48,10 +49,10 @@ namespace PicFavWebApp.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetAllUsers()
         {
-            var users = _userService.GetAllUsers().ToList();
+            var users = _userService.GetAllUsers();
             if (!users.IsNullOrEmpty())
             {
-                return Ok(ObjectConverter.ModelsToDtos<UserDTO,User>(users));
+                return Ok(ObjectConverter.ModelsToDtos<UserDTO,User>(users.ToList()));
             }
             else
             {

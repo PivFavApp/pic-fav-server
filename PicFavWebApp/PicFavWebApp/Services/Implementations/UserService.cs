@@ -54,21 +54,6 @@ namespace PicFavWebApp.Services.Implementations
         {
             try
             {
-                _gameRepository.CreateGame(new Game
-                {
-                    Date = DateTime.Now.Ticks,
-                    Name = "testName3",
-                    Images = new List<GameImage>
-                    {
-                        new GameImage
-                        {
-                            ImageUrl = "testurl",
-                            IsValid = true
-                        }
-                    }
-
-                });
-                List<Game> games = _gameRepository.GetAllGames();
                 return _userRepository.GetAllUsers();
             }
             catch (Exception e)
