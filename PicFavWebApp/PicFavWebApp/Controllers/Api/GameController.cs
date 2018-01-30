@@ -9,6 +9,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using PicFavWebApp.Models;
+using PicFavWebApp.Models.DTO;
 using PicFavWebApp.Services.Interfaces;
 using PicFavWebApp.Utils;
 
@@ -42,7 +43,7 @@ namespace PicFavWebApp.Controllers.Api
         public IHttpActionResult GetAllGames()
         {
 
-            return Ok(_gameService.GetAllGames());
+            return Ok(ObjectConverter.ModelsToDtos<GameDTO, Game>(_gameService.GetAllGames()));
         }
 
         public IHttpActionResult GetGameById(string publicId)
@@ -50,7 +51,7 @@ namespace PicFavWebApp.Controllers.Api
             var game = _gameService.GetGameById(publicId);
             if (game != null)
             {
-                return Ok(game);
+                return Ok(ObjectConverter.ModelToDto<GameDTO, Game>(game));
             }
 
             return NotFound();
@@ -61,7 +62,7 @@ namespace PicFavWebApp.Controllers.Api
             var game = _gameService.GetGameByName(name);
             if (game != null)
             {
-                return Ok(game);
+                return Ok(ObjectConverter.ModelToDto<GameDTO, Game>(game));
             }
 
             return NotFound();
@@ -72,7 +73,7 @@ namespace PicFavWebApp.Controllers.Api
             var game = _gameService.GetGameByDate(date);
             if (game != null)
             {
-                return Ok(game);
+                return Ok(ObjectConverter.ModelToDto<GameDTO, Game>(game));
             }
 
             return NotFound();

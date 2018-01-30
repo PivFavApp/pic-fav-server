@@ -35,17 +35,23 @@ namespace PicFavWebApp.Controllers.Api
             return path;
         }
 
-        public HttpResponseMessage GetImage(string gameId, string imageName)
+        public HttpResponseMessage GetImage(string gamePublicId, string imageName)
         {
             try
             {
-                Game game = _gameService.GetGameById(gameId);
+                Game game = _gameService.GetGameById(gamePublicId);
+                GameImage image = game.Images
+                    .FirstOrDefault(im => im.Game.PublicId == gamePublicId && im.ImageName == imageName);
                 var result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new ByteArrayContent(game.Images.FirstOrDefault(im => im.Game.PublicId == gameId && im.ImageName == imageName).ImageBlob)
+                    Content = new ByteArrayContent(image.ImageBlob)
                 };
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
                 return result;
+            }
+            catch (NullReferenceException e)
+            {
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
             }
             catch (Exception e)
             {
