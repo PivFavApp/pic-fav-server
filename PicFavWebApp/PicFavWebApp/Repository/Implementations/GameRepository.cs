@@ -23,7 +23,7 @@ namespace PicFavWebApp.Repository.Implementations
         public Game GetGameById(string publicId)
         {
             logger.Debug($"Get game by public ID : {publicId}");
-            return context.Games.Include(x => x.Images).SingleOrDefault(g => g.PublicId == publicId);
+            return context.Games/*.Include(x => x.Images)*/.SingleOrDefault(g => g.PublicId == publicId);
         }
 
         public List<Game> GetAllGames()

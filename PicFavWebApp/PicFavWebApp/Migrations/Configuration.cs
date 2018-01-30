@@ -46,7 +46,7 @@ namespace PicFavWebApp.Migrations
                 context.SaveChanges();
 
                 string gamePublicId = Guid.NewGuid().ToString();
-                var gameImages = InitializeTestGameImages(gamePublicId);
+                var gameImages = InitializeTestGameImages("testGame1");
                 var games = new List<Game>
                 {
                     new Game
@@ -72,34 +72,22 @@ namespace PicFavWebApp.Migrations
             }
         }
 
-        private List<GameImage> InitializeTestGameImages(string gameId)
+        private List<GameImage> InitializeTestGameImages(string gameName)
         {
             List<GameImage> gameImages = new List<GameImage>();
             //string imagesPath = /*HostingEnvironment.ApplicationPhysicalPath*/AppDomain.CurrentDomain.BaseDirectory + Constants.PATH_TO_GAME_IMAGES + @"TestGame/";
-            string imagesPath = MapPath("~/Content/GameImages/TestGame");
+            string imagesPath = DirectoryUtil.MapPath("~/Content/GameImages/testGame1");
             bool isImageValid = false;
             string imageName = String.Empty;
 
             foreach (var image in Directory.GetFiles(imagesPath))
             {
-                imageName = Path.GetFileName(image).Split('.').First();
-                gameImages.Add(new GameImage { IsValid = isImageValid, ImageUrl = "https://picfavwebapp.azurewebsites.net/" + "api/image?gameId=" + gameId + "&imageName=" + imageName , ImageBlob = File.ReadAllBytes(image), ImageName = imageName});
+                imageName = Path.GetFileName(image);
+                gameImages.Add(new GameImage { IsValid = isImageValid, ImageUrl = "https://picfavwebapp.azurewebsites.net/" + "api/image?gameName=" + gameName + "&imageName=" + imageName , ImageName = imageName});
                 isImageValid = !isImageValid;
             }
 
             return gameImages;
-        }
-
-        private string MapPath(string seedFile)
-        {
-            if (HttpContext.Current != null)
-                return HostingEnvironment.MapPath(seedFile);
-
-            var absolutePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath; //was AbsolutePath but didn't work with spaces according to comments
-            var directoryName = Path.GetDirectoryName(absolutePath);
-            var path = Path.Combine(directoryName, ".." + seedFile.TrimStart('~').Replace('/', '\\'));
-
-            return path;
         }
     }
 }

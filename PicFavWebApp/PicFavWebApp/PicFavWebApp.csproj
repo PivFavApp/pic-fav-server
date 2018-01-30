@@ -258,7 +258,13 @@
     <Compile Include="Migrations\201801291835528_UpdatedGameImage.Designer.cs">
       <DependentUpon>201801291835528_UpdatedGameImage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801301529325_UpdatedImage.cs" />
+    <Compile Include="Migrations\201801301529325_UpdatedImage.Designer.cs">
+      <DependentUpon>201801301529325_UpdatedImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DTO\GameDTO.cs" />
+    <Compile Include="Models\DTO\GameImageDTO.cs" />
     <Compile Include="Models\DTO\UserDTO.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\GameImage.cs" />
@@ -278,10 +284,50 @@
     <Compile Include="Services\Interfaces\IUserService.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\ObjectConverter.cs" />
+    <Compile Include="Utils\DirectoryUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\GameImages\testGame1\TestGame1.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame10.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame11.png" />
+    <Content Include="Content\GameImages\testGame1\TestGame13.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame14.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame15.gif" />
+    <Content Include="Content\GameImages\testGame1\TestGame16.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame17.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame18.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame19.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame2.png" />
+    <Content Include="Content\GameImages\testGame1\TestGame20.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame21.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame22.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame23.png" />
+    <Content Include="Content\GameImages\testGame1\TestGame24.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame25.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame26.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame27.jpeg" />
+    <Content Include="Content\GameImages\testGame1\TestGame28.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame29.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame3.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame30.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame31.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame32.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame33.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame34.jpeg" />
+    <Content Include="Content\GameImages\testGame1\TestGame35.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame36.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame37.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame38.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame39.png" />
+    <Content Include="Content\GameImages\testGame1\TestGame4.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame40.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame5.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame6.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame7.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame8.jpg" />
+    <Content Include="Content\GameImages\testGame1\TestGame9.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -294,6 +340,7 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\GameImages\testGame1\TestGame12" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -333,7 +380,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\GameImages\TestGame\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -366,6 +412,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801291835528_UpdatedGameImage.resx">
       <DependentUpon>201801291835528_UpdatedGameImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801301529325_UpdatedImage.resx">
+      <DependentUpon>201801301529325_UpdatedImage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

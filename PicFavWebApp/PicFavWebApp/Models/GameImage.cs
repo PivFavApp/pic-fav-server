@@ -11,7 +11,6 @@ namespace PicFavWebApp.Models
         public int GameImageId { get; set; }
 
         public string ImageUrl { get; set; }
-        public byte[] ImageBlob { get; set; }
         public bool IsValid { get; set; }
         public string ImageName { get; set; }
 
