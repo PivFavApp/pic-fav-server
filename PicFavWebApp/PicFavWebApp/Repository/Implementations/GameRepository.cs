@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using NLog;
 using PicFavWebApp.Models;
 using PicFavWebApp.Repository.Interfaces;
+using PicFavWebApp.Utils;
 
 namespace PicFavWebApp.Repository.Implementations
 {
@@ -29,7 +31,11 @@ namespace PicFavWebApp.Repository.Implementations
         public List<Game> GetAllGames()
         {
             logger.Debug("Get all Games");
-            return context.Games/*.Include(x => x.Images)*/.ToList();
+            string currentUser = UserUtil.GetCurrentUser();
+            List<string> f = context.UserStatistics.Where(x => x.User.PublicId == currentUser)
+                .Select(x => x.GamePublicId).ToList();
+            return context.Games.Where(x => !f.Contains(x.PublicId)).ToList();
+            //return context.Games/*.Include(x => x.Images)*/.ToList();
         }
 
         public Game GetGameByDate(long date)

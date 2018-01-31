@@ -12,7 +12,8 @@ namespace PicFavWebApp.Models.DTO
         public string LastName { get; set; }
         public string UserName { get; set; }
         public long Age { get; set; }
-        public int Rating { get; set; }
+        public int GeneralRating { get; set; }
+        public int AverageRating { get; set; }
         public string AvatarUrl { get; set; }
         public UserRole Role { get; set; }
 
@@ -23,7 +24,8 @@ namespace PicFavWebApp.Models.DTO
             LastName = user.LastName;
             UserName = user.UserName;
             Age = user.Age;
-            Rating = user.Rating;
+            GeneralRating = user.GeneralRating;
+            AverageRating = user.AverageRating;
             AvatarUrl = user.AvatarUrl;
             Role = user.Role;
         }

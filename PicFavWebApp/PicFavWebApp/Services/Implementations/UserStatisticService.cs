@@ -58,6 +58,9 @@ namespace PicFavWebApp.Services.Implementations
                         Result = userStat.Result,
                         GamePublicId = userStat.GamePublicId
                     };
+                    user.GeneralRating += userStatistic.Result;
+                    user.AverageRating = user.GeneralRating / (user.Statistics.Count + 1);
+                    _userRepository.UpdateUser(user);
                     _userStatisticRepository.AddUserStatistic(userStatistic);
                     return true;
                 }

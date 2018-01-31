@@ -9,6 +9,7 @@ namespace PicFavWebApp.Services.Interfaces
     public interface IUserService : IDisposable
     {
         bool CreateUser(User user);
+        bool UpdateUser(User user);
         User GetUserByPublicId(string id);
         ICollection<User> GetAllUsers();
         string GetUserPublicIdByUsername(string userName);

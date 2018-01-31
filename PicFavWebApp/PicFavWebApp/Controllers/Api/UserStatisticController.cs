@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
 using PicFavWebApp.Models;
 using PicFavWebApp.Models.DTO;
 using PicFavWebApp.Services.Interfaces;
@@ -19,6 +21,7 @@ namespace PicFavWebApp.Controllers.Api
             _userStatisticService = userStatisticService;
         }
 
+        [Authorize]
         public IHttpActionResult AddUserStatistic(UserStatisticDTO userStat)
         {
             if (_userStatisticService.AddUserStatistic(userStat))

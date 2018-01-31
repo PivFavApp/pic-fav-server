@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using NLog;
@@ -16,6 +17,13 @@ namespace PicFavWebApp.Repository.Implementations
         {
             logger.Debug($"Creating new user, publicId : {user.PublicId}");
             context.Users.Add(user);
+            context.SaveChanges();
+        }
+
+        public void UpdateUser(User user)
+        {
+            logger.Debug($"Updating user, publicId : {user.PublicId}");
+            context.Users.AddOrUpdate(user);
             context.SaveChanges();
         }
 

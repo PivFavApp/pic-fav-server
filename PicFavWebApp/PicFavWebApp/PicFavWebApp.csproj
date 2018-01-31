@@ -271,6 +271,10 @@
     <Compile Include="Migrations\201801311714074_StatisticsMinorChage.Designer.cs">
       <DependentUpon>201801311714074_StatisticsMinorChage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801311800333_UpdateUserModel.cs" />
+    <Compile Include="Migrations\201801311800333_UpdateUserModel.Designer.cs">
+      <DependentUpon>201801311800333_UpdateUserModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DTO\GameDTO.cs" />
     <Compile Include="Models\DTO\GameImageDTO.cs" />
@@ -299,6 +303,7 @@
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\ObjectConverter.cs" />
     <Compile Include="Utils\DirectoryUtil.cs" />
+    <Compile Include="Utils\UserUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -435,6 +440,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801311714074_StatisticsMinorChage.resx">
       <DependentUpon>201801311714074_StatisticsMinorChage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801311800333_UpdateUserModel.resx">
+      <DependentUpon>201801311800333_UpdateUserModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

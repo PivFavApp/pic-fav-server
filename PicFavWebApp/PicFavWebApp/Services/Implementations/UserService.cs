@@ -36,6 +36,20 @@ namespace PicFavWebApp.Services.Implementations
             }
         }
 
+        public bool UpdateUser(User user)
+        {
+            try
+            {
+                _userRepository.UpdateUser(user);
+                return true;
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+                return false;
+            }
+        }
+
         public User GetUserByPublicId(string id)
         {
             try
