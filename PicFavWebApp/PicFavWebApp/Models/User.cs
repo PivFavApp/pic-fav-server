@@ -32,6 +32,7 @@ namespace PicFavWebApp.Models
         public int Rating { get; set; }
         public string AvatarUrl { get; set; }
         public UserRole Role { get; set; }
+        public List<UserStatistic> Statistics { get; set; }
 
         // Salt for password hashing
         public string Salt { get; set; }

@@ -8,7 +8,6 @@ using NLog;
 using PicFavWebApp.Models;
 using PicFavWebApp.Repository.Interfaces;
 using PicFavWebApp.Services.Interfaces;
-using NotImplementedException = System.NotImplementedException;
 
 namespace PicFavWebApp.Services.Implementations
 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using NLog;
@@ -21,7 +22,7 @@ namespace PicFavWebApp.Repository.Implementations
         public User GetUserByPublicId(string id)
         {
             logger.Debug($"Getting user by publicId : {id}");
-            return context.Users.SingleOrDefault(u => u.PublicId == id);
+            return context.Users.Include(u => u.Statistics).SingleOrDefault(u => u.PublicId == id);
         }
 
         public ICollection<User> GetAllUsers()

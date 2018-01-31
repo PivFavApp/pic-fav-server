@@ -225,6 +225,7 @@
     <Compile Include="Controllers\Api\ImageController.cs" />
     <Compile Include="Controllers\Api\TokenTestController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
+    <Compile Include="Controllers\Api\UserStatisticController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\PicFavContext.cs" />
@@ -262,13 +263,22 @@
     <Compile Include="Migrations\201801301529325_UpdatedImage.Designer.cs">
       <DependentUpon>201801301529325_UpdatedImage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801311559255_ChangedUserStatistics.cs" />
+    <Compile Include="Migrations\201801311559255_ChangedUserStatistics.Designer.cs">
+      <DependentUpon>201801311559255_ChangedUserStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801311714074_StatisticsMinorChage.cs" />
+    <Compile Include="Migrations\201801311714074_StatisticsMinorChage.Designer.cs">
+      <DependentUpon>201801311714074_StatisticsMinorChage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DTO\GameDTO.cs" />
     <Compile Include="Models\DTO\GameImageDTO.cs" />
     <Compile Include="Models\DTO\UserDTO.cs" />
+    <Compile Include="Models\DTO\UserStatisticDTO.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\GameImage.cs" />
-    <Compile Include="Models\Statistics.cs" />
+    <Compile Include="Models\UserStatistic.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -276,12 +286,16 @@
     <Compile Include="Repository\Implementations\BaseRepository.cs" />
     <Compile Include="Repository\Implementations\GameRepository.cs" />
     <Compile Include="Repository\Implementations\UserRepository.cs" />
+    <Compile Include="Repository\Implementations\UserStatisticRepository.cs" />
     <Compile Include="Repository\Interfaces\IGameRepository.cs" />
     <Compile Include="Repository\Interfaces\IUserRepository.cs" />
+    <Compile Include="Repository\Interfaces\IUserStatisticRepository.cs" />
     <Compile Include="Services\Implementations\GameService.cs" />
     <Compile Include="Services\Implementations\UserService.cs" />
+    <Compile Include="Services\Implementations\UserStatisticService.cs" />
     <Compile Include="Services\Interfaces\IGameService.cs" />
     <Compile Include="Services\Interfaces\IUserService.cs" />
+    <Compile Include="Services\Interfaces\IUserStatisticService.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\ObjectConverter.cs" />
     <Compile Include="Utils\DirectoryUtil.cs" />
@@ -415,6 +429,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801301529325_UpdatedImage.resx">
       <DependentUpon>201801301529325_UpdatedImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801311559255_ChangedUserStatistics.resx">
+      <DependentUpon>201801311559255_ChangedUserStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801311714074_StatisticsMinorChage.resx">
+      <DependentUpon>201801311714074_StatisticsMinorChage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
