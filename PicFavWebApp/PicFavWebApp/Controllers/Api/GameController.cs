@@ -15,6 +15,7 @@ using PicFavWebApp.Utils;
 
 namespace PicFavWebApp.Controllers.Api
 {
+    [Authorize]
     public class GameController : ApiController
     {
         private readonly IGameService _gameService;
@@ -40,7 +41,6 @@ namespace PicFavWebApp.Controllers.Api
 
         }
 
-        [Authorize]
         public IHttpActionResult GetAllGames()
         {
             return Ok(ObjectConverter.ModelsToDtos<GameDTO, Game>(_gameService.GetAllGames()));

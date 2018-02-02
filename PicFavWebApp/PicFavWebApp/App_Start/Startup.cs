@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
+using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using NLog;
 using Owin;
@@ -41,6 +43,12 @@ namespace PicFavWebApp
             // token generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                LoginPath = new PathString("/"),
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie
+            });
+            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
         }
     }
 }

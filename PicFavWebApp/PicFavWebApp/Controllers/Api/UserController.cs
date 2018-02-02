@@ -69,5 +69,16 @@ namespace PicFavWebApp.Controllers.Api
 
             return NotFound();    
         }
+
+        public IHttpActionResult GetUserByUserName(string userName)
+        {
+            UserDTO user = ObjectConverter.ModelToDto<UserDTO, User>(_userService.GetUserByPublicId(_userService.GetUserPublicIdByUsername(userName)));
+            if (user != null)
+            {
+                return Ok(user);
+            }
+
+            return NotFound();
+        }
     }
 }
