@@ -40,9 +40,9 @@
 
 <div class="container">
     <div class="panel-body">
-        <div id="logo-container" class="">
-            <img src="~/images/OceanHeader450x450.jpg" class="logo center-block img-responsive">
-        </div>
+        @*<div id="logo-container" class="">
+            <img src="" class="logo center-block img-responsive">
+        </div>*@
     </div>
 
     <div class="col-xs-12">
@@ -65,11 +65,11 @@
                 {
                     <div class="form-group input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        @Html.TextBoxFor(m => m.UserName)
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
                     </div>
                     <div class="form-group input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        @Html.TextBoxFor(m => m.Password)
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-default btn-block login-btn" id="submitLogin">Login</button>
@@ -84,28 +84,28 @@
 
 
 @*@section Scripts {
-    <script>
-        $(function() {
-            $('#submitLogin').click(function (e) {
-                e.preventDefault();
-                var loginData = {
-                    grant_type: 'password',
-                    username: $('#userNameLogin').val(),
-                    password: $('#passwordLogin').val()
-                };
+        <script>
+            $(function() {
+                $('#submitLogin').click(function (e) {
+                    e.preventDefault();
+                    var loginData = {
+                        grant_type: 'password',
+                        username: $('#userNameLogin').val(),
+                        password: $('#passwordLogin').val()
+                    };
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/token',
-                    data: loginData
-                }).success(function (data) {
-                    console.log(data.access_token);
-                    window.location = "/Account/Profile";
-                }).fail(function (data) {
-                    console.log(data);
-                    alert(data.responseText);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/token',
+                        data: loginData
+                    }).success(function (data) {
+                        console.log(data.access_token);
+                        window.location = "/Account/Profile";
+                    }).fail(function (data) {
+                        console.log(data);
+                        alert(data.responseText);
+                    });
                 });
             });
-        });
-    </script>*@
-}
+        </script>
+    }*@

@@ -27,6 +27,7 @@ namespace PicFavWebApp.Controllers.Api
         {
             user.PublicId = Guid.NewGuid().ToString();
             user.Salt = user.PublicId;
+            user.Role = UserRole.AppUser;
             // hash pass
             using (var sha512 = SHA512.Create())
             {

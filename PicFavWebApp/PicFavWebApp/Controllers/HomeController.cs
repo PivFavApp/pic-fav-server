@@ -5,15 +5,16 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using PicFavWebApp.DAL;
+using PicFavWebApp.Helpers;
 using PicFavWebApp.Models;
 
 namespace PicFavWebApp.Controllers
 {
+    [PicFavAuthorize(Roles = "Admin")]
     public class HomeController : Controller
     {
         private PicFavContext db = new PicFavContext();
 
-        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View();

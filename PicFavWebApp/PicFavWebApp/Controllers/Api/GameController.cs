@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Security.Claims;
-using System.Web;
-using System.Web.Hosting;
 using System.Web.Http;
-using System.Web.Routing;
 using PicFavWebApp.Models;
 using PicFavWebApp.Models.DTO;
 using PicFavWebApp.Services.Interfaces;
@@ -25,6 +17,7 @@ namespace PicFavWebApp.Controllers.Api
             _gameService = gameService;
         }
 
+        
         public IHttpActionResult CreateGame(Game game)
         {
             if (_gameService.IsAlreadyExists(game))

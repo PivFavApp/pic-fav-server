@@ -16,7 +16,7 @@ using PicFavWebApp.Utils;
 
 namespace PicFavWebApp.Controllers.Api
 {
-    [Authorize]
+   
     public class ImageController : ApiController
     {
         private readonly IGameService _gameService;
