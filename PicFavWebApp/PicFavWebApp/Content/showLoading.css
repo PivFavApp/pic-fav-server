@@ -1,0 +1,14 @@
+
+.loading-indicator {
+    height: 250px;
+    width: 250px;
+    background: url( 'http://superstorefinder.net/support/wp-content/uploads/2018/01/blue_loading.gif' );
+    background-repeat: no-repeat;
+    background-position: center bottom;
+}
+
+.loading-indicator-overlay {
+  background-color: #FFFFFF;
+  opacity: 0.6;
+  filter: alpha(opacity = 60);
+}

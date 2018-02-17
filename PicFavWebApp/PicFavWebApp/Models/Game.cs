@@ -22,5 +22,19 @@ namespace PicFavWebApp.Models
         [StringLength(450)]
         public string Name { get; set; }
         public List<GameImage> Images { get; set; }
+
+        public Game()
+        {
+
+        }
+
+        public Game(Game game)
+        {
+            GameId = game.GameId;
+            PublicId = game.PublicId;
+            Date = game.Date;
+            Name = game.Name;
+            Images = game.Images;
+        }
     }
 }

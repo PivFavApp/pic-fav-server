@@ -1,0 +1,47 @@
+﻿@model List<PicFavWebApp.ViewModels.CreateGameViewModel>
+@{
+    ViewBag.Title = "GamesList";
+}
+
+<h2>GamesList</h2>
+
+<div class="">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    @Html.DisplayNameFor(m => m.FirstOrDefault().PublicId)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(m => m.FirstOrDefault().Date)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(m => m.FirstOrDefault().Name)
+                </th>
+                <th class="text-center">
+                    
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in Model)
+            {
+            <tr>
+                <td class="text-center">
+                    @Html.ActionLink(game.PublicId, "GameDetails", new { publicId = game.PublicId })
+                </td>
+                <td class="text-center">
+                    @*@Html.DisplayFor(item => game.Date)*@
+                    @game.Date.ToShortDateString()
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(item => game.Name)
+                </td>
+                <td class="text-center">
+                    @Html.ActionLink("Delete game", "DeleteGame", new { publicId = game.PublicId }, new {@class = "btn btn-danger"});
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -52,7 +52,7 @@ namespace PicFavWebApp.Migrations
                     new Game
                     {
                         GameId = 1,
-                        Date = DateTime.Now.Ticks,
+                        Date = ObjectConverter.GetUnixDate(DateTime.Now),
                         PublicId = gamePublicId,
                         Name = "testGame1",
                         Images = gameImages
@@ -74,20 +74,27 @@ namespace PicFavWebApp.Migrations
 
         private List<GameImage> InitializeTestGameImages(string gameName)
         {
-            List<GameImage> gameImages = new List<GameImage>();
-            //string imagesPath = /*HostingEnvironment.ApplicationPhysicalPath*/AppDomain.CurrentDomain.BaseDirectory + Constants.PATH_TO_GAME_IMAGES + @"TestGame/";
-            string imagesPath = DirectoryUtil.MapPath("~/Content/GameImages/testGame1");
-            bool isImageValid = false;
-            string imageName = String.Empty;
-
-            foreach (var image in Directory.GetFiles(imagesPath))
+            try
             {
-                imageName = Path.GetFileName(image);
-                gameImages.Add(new GameImage { IsValid = isImageValid, ImageUrl = "https://picfavwebapp.azurewebsites.net/" + "api/image?gameName=" + gameName + "&imageName=" + imageName , ImageName = imageName});
-                isImageValid = !isImageValid;
-            }
+                List<GameImage> gameImages = new List<GameImage>();
+                //string imagesPath = /*HostingEnvironment.ApplicationPhysicalPath*/AppDomain.CurrentDomain.BaseDirectory + Constants.PATH_TO_GAME_IMAGES + @"TestGame/";
+                string imagesPath = DirectoryUtil.MapPath(Constants.PATH_TO_GAME_IMAGES + "testGame1");
+                bool isImageValid = false;
+                string imageName = String.Empty;
 
-            return gameImages;
+                foreach (var image in Directory.GetFiles(imagesPath))
+                {
+                    imageName = Path.GetFileName(image);
+                    gameImages.Add(new GameImage { IsValid = isImageValid, ImageUrl = Constants.PUBLISH_BASE_URL + string.Format(Constants.GET_IMAGE_URL, gameName, imageName), ImageName = imageName });
+                    isImageValid = !isImageValid;
+                }
+
+                return gameImages;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 }

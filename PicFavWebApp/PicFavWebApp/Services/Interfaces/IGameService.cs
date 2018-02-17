@@ -9,6 +9,8 @@ namespace PicFavWebApp.Services.Interfaces
     public interface IGameService : IDisposable
     {
         bool CreateGame(Game game);
+        bool UpdateGame(Game game);
+        bool DeleteGame(string publicId);
         Game GetGameById(string publicId);
         List<Game> GetAllGames();
         Game GetGameByDate(long date);

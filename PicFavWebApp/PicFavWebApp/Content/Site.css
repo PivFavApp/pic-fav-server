@@ -22,3 +22,16 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.pointer {
+    cursor: pointer;
+}
+
+.dropzone-remove-btn {
+    margin: 0 auto;
+    display: block;
+}
+
+.images-panel {
+    margin-bottom: 3vh;
+}

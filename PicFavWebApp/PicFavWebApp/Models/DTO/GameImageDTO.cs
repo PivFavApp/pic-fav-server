@@ -9,11 +9,13 @@ namespace PicFavWebApp.Models.DTO
     {
         public string ImageUrl { get; set; }
         public bool IsValid { get; set; }
+        public string ImageName { get; set; }
 
         public GameImageDTO(GameImage image)
         {
             ImageUrl = image.ImageUrl;
             IsValid = image.IsValid;
+            ImageName = image.ImageName;
         }
     }
 }

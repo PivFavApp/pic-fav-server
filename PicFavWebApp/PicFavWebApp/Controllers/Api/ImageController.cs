@@ -26,18 +26,6 @@ namespace PicFavWebApp.Controllers.Api
             _gameService = gameService;
         }
 
-        private string MapPath(string seedFile)
-        {
-            if (HttpContext.Current != null)
-                return HostingEnvironment.MapPath(seedFile);
-
-            var absolutePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath; //was AbsolutePath but didn't work with spaces according to comments
-            var directoryName = Path.GetDirectoryName(absolutePath);
-            var path = Path.Combine(directoryName, ".." + seedFile.TrimStart('~').Replace('/', '\\'));
-
-            return path;
-        }
-
         public HttpResponseMessage GetImage(string gameName, string imageName)
         {
             try
@@ -46,12 +34,13 @@ namespace PicFavWebApp.Controllers.Api
                 //GameImage image = game.Images
                 //    .FirstOrDefault(im => im.Game.PublicId == gamePublicId && im.ImageName == imageName);
                 
-                byte[] file = File.ReadAllBytes(DirectoryUtil.MapPath("~/Content/GameImages/" + game.Name + "/" + imageName));
+                byte[] file = File.ReadAllBytes(DirectoryUtil.MapPath(Constants.PATH_TO_GAME_IMAGES + game.Name + @"/" + imageName));
                 var result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new ByteArrayContent(/*image.ImageBlob*/file)
                 };
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+                //result.Content.Headers.Add("Access-Control-Allow-Origin", "*");
                 return result;
 
             }

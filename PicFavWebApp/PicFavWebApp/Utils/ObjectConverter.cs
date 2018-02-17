@@ -37,5 +37,17 @@ namespace PicFavWebApp.Utils
                 return default(T);
             }
         }
+
+        public static long GetUnixDate(DateTime date)
+        {
+            return (long)(date - new DateTime(1970, 1, 1)).TotalSeconds;
+        }
+
+        public static DateTime GetDateFromUnix(long longdate)
+        {
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(longdate).ToLocalTime();
+            return dtDateTime;
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model PicFavWebApp.Models.User
+﻿@model PicFavWebApp.ViewModels.LoginViewModel
 
 @{
     ViewData["Title"] = "Login";
@@ -48,31 +48,18 @@
     <div class="col-xs-12">
         <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
             <div class="col-md-12 col-lg-12 col-md-offset-1 col-lg-offset-2">
-                @*<form asp-action="Signin">
-                        <div class="form-group input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input type="text" class="form-control fullLength" id="userNameLogin" placeholder="username">
-                        </div>
-                        <div class="form-group input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input type="password" class="form-control fullLength" id="passwordLogin" placeholder="password">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-default btn-block login-btn" id="submitLogin">Login</button>
-                        </div>
-                    </form>*@
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
                 {
                     <div class="form-group input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control fullLength" })
                     </div>
                     <div class="form-group input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control fullLength" })
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default btn-block login-btn" id="submitLogin">Login</button>
+                        <button type="submit" class="btn btn-default btn-block login-btn form-control" id="submitLogin">Login</button>
                     </div>
                 }
             </div>

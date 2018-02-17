@@ -1,0 +1,274 @@
+﻿@using PicFavWebApp.Helpers
+@using PicFavWebApp.Utils
+@model PicFavWebApp.ViewModels.CreateGameViewModel
+
+
+@{
+    ViewBag.Title = "GameCreation";
+}
+
+<h2>Edit Game</h2>
+<hr />
+
+<div id="imageLoadPanel">
+
+    @using (Html.BeginForm("EditGame", "GameManagement", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.PublicId)
+        <div class="row">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.Date)
+                @Html.TextBoxFor(m => m.Date, null, new { @class = "form-control datefield datetimepicker4", @id = "datetimepicker4" })
+                @Html.ValidationMessageFor(m => m.Date, null, new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-8">
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @id = "gameName" })
+                @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
+            </div>
+        </div>
+
+    }
+    <hr />
+    @*@Html.FileUploadForm("../GameManagement/Test")*@
+
+    <div class="row images-panel">
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.ValidImages)
+            <form action='../GameManagement/EditGame' method='post'
+                  enctype='multipart/form-data' class='dropzone' id='dropzoneForm'>
+                <div class='fallback'>
+                    <input name='file' type='file' multiple />
+                    @*<input type='submit' value='Upload' />*@
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.InvalidImages)
+            <form action='../GameManagement/EditGame' method='post'
+                  enctype='multipart/form-data' class='dropzone' id='dropzoneForm2'>
+                <div class='fallback'>
+                    <input name='file' type='file' multiple />
+                    @*<input type='submit' value='Upload' />*@
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-4 col-sm-offset-4">
+            <button class="form-control btn btn-default" id="submit-all">Update game</button>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script type="text/javascript">
+        Dropzone.options.dropzoneForm = {
+
+            // Prevents Dropzone from uploading dropped files immediately
+            autoProcessQueue: false,
+
+            renameFile: function(file) {
+                return "@Constants.VALID_IMAGE_PREFIX" + file.name;
+            },
+
+            init: function() {
+
+                var dropzoneForm = this; // closure
+
+                this.on("addedfile",
+                    function(file) {
+                        // Create the remove button
+                        var removeButton =
+                            Dropzone.createElement(
+                                "<button class='btn btn-danger btn-xs dropzone-remove-btn'>Remove</button>");
+
+                        // Listen to the click event
+                        removeButton.addEventListener("click",
+                            function(e) {
+                                // Make sure the button click doesn't submit the form:
+                                e.preventDefault();
+                                e.stopPropagation();
+
+                                // Remove the file preview.
+                                dropzoneForm.removeFile(file);
+                            });
+
+                        file.previewElement.appendChild(removeButton);
+                    });
+
+                this.on("removedfile",
+                    function(file) {
+                        // Only files that have been programmatically added should
+                        // have a url property.
+                        if (file.url && file.url.trim().length > 0) {
+                            $("<input type='hidden'>").attr({
+                                id: "@Constants.VALID_IMAGE_PREFIX" + "DeletedImageUrls",
+                                name: "@Constants.VALID_IMAGE_PREFIX" + "DeletedImageUrls"
+                            }).val(file.name).appendTo('#dropzoneForm');
+                        }
+                    });
+
+                var submitButton = document.querySelector("#submit-all");
+
+                submitButton.addEventListener("click",
+                    function() {
+                        if (dropzoneForm.getQueuedFiles().length === 0 || $("#dropzoneForm2")[0].dropzone.getQueuedFiles().length === 0) {
+                            alert("Game imeges cannot be empty");
+                        } else {
+                            dropzoneForm.processQueue("dropzoneForm2"); // Tell Dropzone to process all queued files.
+                        }
+                    });
+
+                var storedImages = @Html.Raw(Json.Encode(Model.StoredImages.Where(m => m.IsValid == true)));
+                if (storedImages) {
+                    for (let i = 0; i < storedImages.length; i++) {
+                        let mockFile = {
+                            name: storedImages[i].ImageName,
+                            filename: storedImages[i].ImageName,
+                            size: 12345,
+                            type: 'image/jpeg',
+                            status: Dropzone.QUEUED,
+                            url: storedImages[i].ImageUrl,
+                            dataURL: storedImages[i].ImageUrl,
+                            upload: {
+                                filename: storedImages[i].ImageName
+                            }
+                        };
+
+                        // Call the default addedfile event handler
+                        dropzoneForm.emit("addedfile", mockFile);
+                        dropzoneForm.files.push(mockFile);
+                        // And optionally show the thumbnail of the file:
+                        //dropzoneForm.emit("thumbnail", mockFile, mockFile.url);
+                        dropzoneForm.createThumbnailFromUrl(mockFile,
+                            dropzoneForm.options.thumbnailWidth,
+                            dropzoneForm.options.thumbnailHeight,
+                            dropzoneForm.options.thumbnailMethod,
+                            true,
+                            function(thumbnail) {
+                                dropzoneForm.emit('thumbnail', mockFile, thumbnail);
+                            },
+                            "anonymous");
+                        dropzoneForm.emit("complete", mockFile);
+                    }
+                }
+
+                this.on("sendingmultiple",
+                    function(file, xhr, formData) {
+
+                        // Will sendthe filesize along with the file as POST data.
+                        jQuery('#imageLoadPanel').showLoading();
+                        jQuery('#imageLoadPanel').load();
+                        formData.append("date", $('#datetimepicker4').val());
+                        formData.append("name", $('#gameName').val());
+                        formData.append("publicId", "@Model.PublicId");
+                    });
+
+                this.on("successmultiple",
+                    function(file, response) {
+                        jQuery('#imageLoadPanel').hideLoading();
+                        var url = "@Url.Action("GameDetails", "GameManagement", new RouteValueDictionary(new Dictionary<string, object>(){{"publicId",Model.PublicId}}))";
+                        window.location.href = url;
+                    });
+
+                this.on("error",
+                    function(file, response) {
+                        jQuery('#imageLoadPanel').hideLoading();
+                        var url = "@Url.Action("GameCreation", "GameManagement", new RouteValueDictionary(new Dictionary<string, object>() { { "publicId", Model.PublicId } }))";
+                        window.location.href = url;
+                    });
+            }
+        };
+        Dropzone.options.dropzoneForm.uploadMultiple = true;
+        Dropzone.options.dropzoneForm.maxFiles = 1000;
+        Dropzone.options.dropzoneForm.parallelUploads = 1000;
+
+        Dropzone.options.dropzoneForm2 = {
+
+            // Prevents Dropzone from uploading dropped files immediately
+            autoProcessQueue: false,
+
+            renameFile: function(file) {
+                return "@Constants.INVALID_IMAGE_PREFIX" + file.name;
+            },
+
+            init: function() {
+                var dropzoneForm2 = this; // closure
+
+                this.on("addedfile",
+                    function(file) {
+                        // Create the remove button
+                        var removeButton =
+                            Dropzone.createElement(
+                                "<button class='btn btn-danger btn-xs dropzone-remove-btn'>Remove</button>");
+
+                        // Listen to the click event
+                        removeButton.addEventListener("click",
+                            function(e) {
+                                // Make sure the button click doesn't submit the form:
+                                e.preventDefault();
+                                e.stopPropagation();
+
+                                // Remove the file preview.
+                                dropzoneForm2.removeFile(file);
+                            });
+
+                        file.previewElement.appendChild(removeButton);
+                    });
+
+                this.on("removedfile",
+                    function (file) {
+                        // Only files that have been programmatically added should
+                        // have a url property.
+                        if (file.url && file.url.trim().length > 0) {
+                            $("<input type='hidden'>").attr({
+                                id: "@Constants.INVALID_IMAGE_PREFIX" + "DeletedImageUrls",
+                                name: "@Constants.INVALID_IMAGE_PREFIX" + "DeletedImageUrls"
+                            }).val(file.name).appendTo('#dropzoneForm');
+                        }
+                    });
+
+                var storedImages = @Html.Raw(Json.Encode(Model.StoredImages.Where(m => m.IsValid == false)));;
+                if (storedImages) {
+                    for (let i = 0; i < storedImages.length; i++) {
+                        let mockFile = {
+                            name: storedImages[i].ImageName,
+                            filename: storedImages[i].ImageName,
+                            size: 12345,
+                            type: 'image/jpeg',
+                            status: Dropzone.QUEUED,
+                            url: storedImages[i].ImageUrl,
+                            dataURL: storedImages[i].ImageUrl,
+                            upload: {
+                                filename: storedImages[i].ImageName
+                            }
+                        };
+
+                        // Call the default addedfile event handler
+                        dropzoneForm2.emit("addedfile", mockFile);
+                        // And optionally show the thumbnail of the file:
+                        //dropzoneForm.emit("thumbnail", mockFile, "https://picfavwebapp.azurewebsites.net/api/image?gameName=THRGame&imageName=c4fde77c-bae3-4b9f-bf7a-b6441e7e270b.jpg");
+                        dropzoneForm2.createThumbnailFromUrl(mockFile,
+                            dropzoneForm2.options.thumbnailWidth,
+                            dropzoneForm2.options.thumbnailHeight,
+                            dropzoneForm2.options.thumbnailMethod,
+                            true,
+                            function(thumbnail) {
+                                dropzoneForm2.emit('thumbnail', mockFile, thumbnail);
+                            },
+                            "anonymous");
+
+                        dropzoneForm2.files.push(mockFile);
+                        dropzoneForm2.emit("complete", mockFile);
+                    }
+                }
+
+            }
+        };
+        Dropzone.options.dropzoneForm2.uploadMultiple = true;
+        Dropzone.options.dropzoneForm2.maxFiles = 1000;
+        Dropzone.options.dropzoneForm2.parallelUploads = 1000;
+
+</script>
+}
